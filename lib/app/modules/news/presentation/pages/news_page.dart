@@ -121,10 +121,26 @@ class _NewsPageState extends State<NewsPage> {
             onRefresh: () async => newsBloc.add(RefreshNewsEvent()),
             child: ListView.separated(
               controller: newsScrollController,
-              itemCount: newsBloc.news.length,
+              itemCount: state is GettingMoreNewsState
+                  ? newsBloc.currentQuantity + 1
+                  : newsBloc.currentQuantity,
               separatorBuilder: (_, __) => SizedBox(height: 8),
               padding: const EdgeInsets.all(8),
               itemBuilder: (context, index) {
+                if (state is! LoadedAllNewsState &&
+                    index == newsBloc.currentQuantity) {
+                  final shimmerQuantity = 3;
+
+                  return Column(
+                    children: [
+                      for (int i = 0; i < shimmerQuantity; i++) ...[
+                        const NewsCardShimmer(),
+                        if (i != shimmerQuantity - 1) const SizedBox(height: 8),
+                      ],
+                    ],
+                  );
+                }
+
                 final news = newsBloc.news.elementAt(index);
 
                 return NewsCard(news: news);
