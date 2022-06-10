@@ -11,16 +11,12 @@ dependencies:
     sdk: flutter
 
   dartz: ^0.10.1
-  http: ^0.13.4
   flutter_modular: ^5.0.2
   animations: ^2.0.2
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
   shimmer: ^2.0.0
   unicons: ^2.1.0
-  flutter_secure_storage: ^5.0.2
-  hive: ^2.2.1
-  path_provider: ^2.0.10
   sqflite: ^2.0.2+1
   firebase_core: ^1.17.1
   cloud_firestore: ^3.1.17
