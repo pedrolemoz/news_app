@@ -29,9 +29,11 @@ class _NewsCardState extends State<NewsCard>
     Timer.periodic(Duration(minutes: 1), (_) => calculateTimeAgo());
   }
 
-  void calculateTimeAgo() => setState(
-        () => timeAgo = timeago.format(widget.news.timestamp),
-      );
+  void calculateTimeAgo() {
+    if (mounted) {
+      setState(() => timeAgo = timeago.format(widget.news.timestamp));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
