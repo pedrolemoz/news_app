@@ -4,7 +4,9 @@ import '../../infrastructure/datasources/news_local_datasource.dart';
 import '../../infrastructure/exceptions/core_exceptions.dart';
 import '../../infrastructure/exceptions/news_exceptions.dart';
 import '../../infrastructure/mappers/news_mapper.dart';
+import '../../utils/constants.dart';
 import '../databases/sql_database/errors/sql_exceptions.dart';
+import '../databases/sql_database/operations/sql_select.dart';
 import '../databases/sql_database/sqflite_database_implementation.dart';
 
 class NewsLocalDataSourceImplementation implements NewsLocalDataSource {
@@ -18,19 +20,20 @@ class NewsLocalDataSourceImplementation implements NewsLocalDataSource {
       int? offset;
 
       if (request.shouldUseLastDocumentReference) {
-        final lastDocument = await dataBase.select(
-          NewsMapper.toSQLSelect(
-            lastDocumentReference: request.lastDocumentReference,
-          ),
+        final lastDocumentSelectStatement = SQLSelect(
+          tableName: 'NEWS',
+          where: 'reference = \'${request.lastDocumentReference}\'',
+          limit: 1,
         );
+        final lastDocument = await dataBase.select(lastDocumentSelectStatement);
         offset = lastDocument[0]['id'];
       }
-
-      final data = await dataBase.select(
-        NewsMapper.toSQLSelect(
-          offset: offset,
-        ),
+      final newsSelectStatement = SQLSelect(
+        tableName: 'NEWS',
+        offset: offset,
+        limit: Constants.paginationSize,
       );
+      final data = await dataBase.select(newsSelectStatement);
       final news = List<News>.from(
         data.map(
           (news) => NewsMapper.fromMap(news),

@@ -5,10 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/news.dart';
 import '../../external/databases/sql_database/operations/sql_create_table.dart';
 import '../../external/databases/sql_database/operations/sql_insert.dart';
-import '../../external/databases/sql_database/operations/sql_select.dart';
 import '../../external/databases/sql_database/types/sql_integer.dart';
 import '../../external/databases/sql_database/types/sql_text.dart';
-import '../../utils/constants.dart';
 
 class NewsMapper {
   static Map<String, dynamic> toMap(News news) {
@@ -42,22 +40,6 @@ class NewsMapper {
         tableName: 'NEWS',
         data: toMap(news),
       );
-
-  static SQLSelect toSQLSelect({int? offset, String? lastDocumentReference}) {
-    if (lastDocumentReference != null) {
-      return SQLSelect(
-        tableName: 'NEWS',
-        where: 'reference = \'$lastDocumentReference\'',
-        limit: 1,
-      );
-    } else {
-      return SQLSelect(
-        tableName: 'NEWS',
-        offset: offset,
-        limit: Constants.paginationSize,
-      );
-    }
-  }
 
   static SQLCreateTable get tableCreationStatement => const SQLCreateTable(
         tableName: 'NEWS',

@@ -10,9 +10,23 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Firebase
   firebase_core: ^1.17.1
   cloud_firestore: ^3.1.17
+
+  # Local SQL Database
   sqflite: ^2.0.2+1
+
+  # State management
+  bloc: ^8.0.3
+  flutter_bloc: ^8.0.1
+
+  # UI
+  shimmer: ^2.0.0
+  unicons: ^2.1.0
+  timeago: ^3.2.2
+  flutter_modular: ^5.0.3
+  animations: ^2.0.3
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,3 @@
-// Code adapted from https://github.com/Flutterando/modular/blob/master/flutter_modular/lib/src/shared/either.dart
-// Under the MIT License
-// Original author: Flutterando
-
 abstract class Either<L, R> {
   bool get isLeft;
   bool get isRight;
